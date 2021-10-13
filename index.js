@@ -1,6 +1,6 @@
 const core = require("@actions/core");
 const fetch = require("node-fetch");
-(aysnc () => {
+(async () => {
 // async function main() {
   try {
     const payload = {
