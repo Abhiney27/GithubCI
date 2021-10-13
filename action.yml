@@ -9,4 +9,4 @@ inputs:
     description: 'Channel where the messages are sended'
 runs:
   using: 'node12'
-  main: 'index.js'
+  main: 'slack-notification.js'
