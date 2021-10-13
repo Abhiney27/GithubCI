@@ -1,6 +1,8 @@
 name: 'Notify Job Status to Slack'
 description: 'Notify a job status to a specific Slack channel.'
 inputs:
+  event:
+    description: 'event info'
   job-status:
     description: 'job status'
   slack-bot-token:
