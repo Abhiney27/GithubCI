@@ -1,7 +1,7 @@
 const core = require("@actions/core");
 const fetch = require("node-fetch");
-
-(aysnc () => {
+// (aysnc () => {
+async function main() {
   try {
     const payload = {
       channel: `${core.getInput("channel")}`,
