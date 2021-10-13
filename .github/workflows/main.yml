@@ -14,17 +14,49 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  # This workflow contains a single job called "build"        
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  test_notify:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    name: Test the action on success
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Success
+        run: exit 0
+      - name: Action
+        uses: ./ 
+        if: always()
+        with:
+          job-status: ${{ job.status }}
+          slack-bot-token: ${{ secrets.SLACK_TOKEN }}
+          channel: some-slack-channel
+#     build:
+#     # The type of runner that the job will run on
+#       runs-on: ubuntu-latest
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+#     # Steps represent a sequence of tasks that will be executed as part of the job
+#       steps:
+#       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#         - uses: actions/checkout@v2
+
+#       # Runs a single command using the runners shell
+#         - name: Run a one-line script
+#           run: echo Hello, world!
+
+  test_ko:
+    runs-on: ubuntu-latest
+    name: Test the action on failure
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Failure
+        run: exit 1
+      - name: Action
+        uses: ./
+        if: always()
+        with:
+            job-status: ${{ job.status }}
+            slack-bot-token: ${{ secrets.SLACK_TOKEN }}
+            channel: some-slack-channel
+
